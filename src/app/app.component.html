@@ -1,22 +1,22 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form (ngSubmit)='onSubmit(signupForm)' #signupForm='ngForm'>
-        <div id="user-data">
+      <form (ngSubmit)='onSubmit()' #signupForm='ngForm'>
+        <div id="user-data" ngModelGroup="userData">
           <div class="form-group">
             <label for="username">Username</label>
             <input 
                   type="text" 
                   id="username" 
                   class="form-control"
-                  ngModel 
+                  [ngModel] = 'defaultName' 
                   name='username'
                   required 
                   #username='ngModel'
                   >
               <span class="text-danger" *ngIf='!username.valid && username.touched'>Please enter a valid username</span>
           </div>
-          <button class="btn btn-default" type="button">Suggest an Username</button>
+          <button class="btn btn-default" type="button" (click)='onSuggestUsername()'>Suggest an Username</button>
           <div class="form-group">
             <label for="email">Mail</label>
             <input 
@@ -49,6 +49,14 @@
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
+    </div>
+    <hr>
+    <div class="col col-md-12" *ngIf='formSubmitted'>
+      <p>Name: {{ user.name }}</p>
+      <p>Email: {{ user.email }}</p>
+      <p>Secret: {{ user.secret }}</p>
+
+      <button class="btn btn-primary" (click)='onResetForm()'>Reset Form</button>
     </div>
   </div>
 </div>
