@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +20,8 @@ export class AppComponent implements OnInit{
     this.signupForm = new FormGroup({
       'username': new FormControl(null,Validators.required),
       'email': new FormControl(null, [Validators.required, Validators.email, this.isEmailNotAllowed.bind(this)]),
-      'gender': new FormControl(null,[Validators.required])
+      'gender': new FormControl(null,[Validators.required]),
+      'rules': new FormArray([])
     });
   }
 
@@ -33,5 +34,10 @@ export class AppComponent implements OnInit{
       return {'notAllowedEmail':true};
     } 
     return null;
+  }
+
+  onAddRules() {
+    const control = new FormControl(null, Validators.required);
+    (<FormArray>this.signupForm.get('rules')).push(control);
   }
 }

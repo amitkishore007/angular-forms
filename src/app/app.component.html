@@ -22,20 +22,26 @@
                 class="form-control"
                 formControlName='email'
                 >
-                <span class="text-danger" *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched && signupForm.get('email').errors['required']">Please enter a valid email address !</span>
-                <span class="text-danger" *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched && signupForm.get('email').errors['notAllowedEmail']">Invalid email adress entered !</span>
-              </div>
-              <div class="radio" *ngFor="let gender of genders">
-                <label>
-                  <input 
-                  type="radio" 
-                  [value]="gender" 
-                  name='gender'
-                  formControlName='gender'
-                  >{{ gender }}
-                </label>
-                  <span class="text-danger" *ngIf="!signupForm.get('gender').valid && signupForm.get('gender').touched">Please select a gender</span>
-          
+          <span class="text-danger" *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched && signupForm.get('email').errors['required']">Please enter a valid email address !</span>
+          <span class="text-danger" *ngIf="!signupForm.get('email').valid && signupForm.get('email').touched && signupForm.get('email').errors['notAllowedEmail']">Invalid email adress entered !</span>
+        </div>
+        <div class="radio" *ngFor="let gender of genders">
+          <label>
+            <input 
+            type="radio" 
+            [value]="gender" 
+            name='gender'
+            formControlName='gender'
+            >{{ gender }}
+          </label>
+            <span class="text-danger" *ngIf="!signupForm.get('gender').valid && signupForm.get('gender').touched">Please select a gender</span>
+        </div>
+        <div formArrayName='rules'>
+         <h2>Add your Rules</h2>
+          <button class="btn btn-primary" (click)='onAddRules()'>Add More Rule</button>
+          <div class="form-group" *ngFor='let rule of signupForm.get("rules").controls; let i = index'>
+            <input type="text" name='rule[]' [formControlName]='i'><br/>
+          </div>
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
